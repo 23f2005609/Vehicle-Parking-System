@@ -62,5 +62,5 @@ class Payment(db.Model):
     reservation_id = db.Column(db.Integer, db.ForeignKey('reserveparkingspot.id'), nullable=False)
     amount = db.Column(db.Float, nullable=False)
     payment_method = db.Column(db.String(50), nullable=False)  # e.g., 'Cash', 'Card', 'UPI'
-    status = db.Column(db.String(20), nullable=False)  # e.g., 'Success', 'Pending', 'Failed'
+    status = db.Column(db.String(20), nullable=False)  
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
