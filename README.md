@@ -4,7 +4,7 @@ This is a Flask-based Vehicle Parking Management System for Admins and Users. It
 Steps To Run the Project:-
 
 1. Clone the Repository
-https://github.com/23f2005609/Vehicle_Parking_System.git
+https://github.com/23f2005609/Vehicle-Parking-System.git
 cd vehicle_parking_app
 
 2. Install Dependencies
