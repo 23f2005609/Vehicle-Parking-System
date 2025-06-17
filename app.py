@@ -5,7 +5,7 @@ from controllers.api_controllers import api
 
 def setup_app():
     app=Flask(__name__)
-    app.secret_key = 'super_secret_@123'  # You can use any random string here
+    app.secret_key = 'super_secret_@123'  # You can use any random string here , we need this if we use flask sessions , flash
 
     app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///vehicle_parking.sqlite3" #Having db file
 
