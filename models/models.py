@@ -39,7 +39,8 @@ class ParkingSpot(db.Model):
     lot_id = db.Column(db.Integer, db.ForeignKey('parkinglot.id'), nullable=False)
     status = db.Column(db.String(1))  # 'O' = Occupied, 'A' = Available
     reserveparkingspot=db.relationship("ReserveParkingSpot",cascade="all,delete",backref="parkingspot",lazy=True) #Parkingspot can access all of its reserve parking spots
-    lot = db.relationship("ParkingLot", backref="spots")  # Add this line
+    #Relations
+    lot = db.relationship("ParkingLot", backref="spots")
 
 #Entity 4
 class ReserveParkingSpot(db.Model):
@@ -51,7 +52,7 @@ class ReserveParkingSpot(db.Model):
     leaving_timestamp = db.Column(db.DateTime)
     parking_cost_per_unit = db.Column(db.Float,default=0.0)
     vehicle_no = db.Column(db.String(20), nullable=False) 
-    # Relationships
+    # Relations
     user= db.relationship("UserInfo", backref="reservations")
     spot = db.relationship("ParkingSpot", backref="reservations")
     payment = db.relationship('Payment', backref='reservation', uselist=False)
