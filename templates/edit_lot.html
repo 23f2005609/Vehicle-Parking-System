@@ -1,0 +1,46 @@
+{%extends "admin_layout.html"%} <!--Inherited all nav feature-->
+{%block content%}
+{% if parkinglot%}
+<h3 class="center">Edit Parking Lot</h3>
+
+<form action="/edit_lot/{{parkinglot.id}}/{{email}}" method="POST">
+    <div class="mb-3">
+        <label for="Input1" class="form-label">Prime Location Name:</label>
+        <input type="text" class="form-control" id="Input1" name="prime_location_name"
+            value="{{parkinglot.prime_location_name}}">
+    </div>
+    <div class="mb-3">
+        <label for="address" class="form-label">Address:</label>
+        <textarea class="form-control" id="address" name="address">{{ parkinglot.address }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label for="pincode" class="form-label">Pin Code:</label>
+        <input type="text" class="form-control" id="pincode" name="pin_code" value="{{parkinglot.pin_code}}">
+    </div>
+    <div class="mb-3">
+        <label for="Input2" class="form-label">Price(per hour):</label>
+        <input type="number" step="0.01" class="form-control" id="Input2" name="price" value="{{parkinglot.price}}">
+    </div>
+    <div class="mb-3">
+        <label for="Input3" class="form-label">Maximum Spots:</label>
+        <input type="number" class="form-control" id="Input3" name="maximum_number_of_spots"
+            value="{{parkinglot.maximum_number_of_spots}}">
+    </div>
+
+
+    <div style="text-align: center;">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <span>
+            <!-- <a href="/delete_lot/{{parkinglot.id}}/{{name}}" type="button" class="btn btn-danger">Delete</a> -->
+            <a href="/delete_lot/{{ parkinglot.id }}/{{ email }}" class="btn btn-danger"
+                onclick="return confirm('Are you sure you want to delete this parking lot? This action cannot be undone.');">
+                Delete
+            </a>
+            <a href="/admin/{{email}}" type="button" class="btn btn-primary">Cancel</a></span>
+            {% if msg %}
+            <div class="alert alert-success mt-3">{{ msg }}</div>
+            {% endif %}
+    </div>
+</form>
+{% endif %}
+{% endblock %}

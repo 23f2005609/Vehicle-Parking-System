@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: Vehicle Parking System API
+  version: 1.0.0
+paths:
+  /api/get_lots:
+    get:
+      summary: Get all parking lots
+      responses:
+        '200':
+          description: A list of parking lots
+  /api/add_lot:
+    post:
+      summary: Add a new parking lot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParkingLot'
+      responses:
+        '201':
+          description: Lot created with spots
+  /api/edit_lot/{id}:
+    put:
+      summary: Edit a parking lot by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParkingLot'
+      responses:
+        '200':
+          description: Lot updated
+        '404':
+          description: Lot not found
+  /api/delete_lot/{id}:
+    delete:
+      summary: Delete a parking lot by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lot deleted
+        '404':
+          description: Lot not found
+  /api/search_lot/{id}:
+    get:
+      summary: Search a lot by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lot details
+        '404':
+          description: Lot not found
+
+components:
+  schemas:
+    ParkingLot:
+      type: object
+      properties:
+        prime_location_name:
+          type: string
+        price:
+          type: number
+        address:
+          type: string
+        pin_code:
+          type: string
+        maximum_number_of_spots:
+          type: integer

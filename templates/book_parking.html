@@ -1,0 +1,24 @@
+{% extends "user_layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h4 class="mb-4">Book the Parking Spot</h4>
+    <form method="POST" action="{{ url_for('reserve_parking', emai=user.email) }}">
+    <div class="mb-3">
+         <label for="spot_id">Spot ID:</label>
+        <input type="text" class="form-control" id="spot_id" name="spot_id" value="{{ spot.id }}" readonly>
+    </div>
+        <div class="mb-3">
+            <label for="user_id" class="form-label">User ID:</label>
+            <input type="text" class="form-control" id="user_id" name="user_id" value="{{ user.id }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="vehicle_no" class="form-label">Vehicle Number:</label>
+            <input type="text" class="form-control" id="vehicle_no" name="vehicle_no" required>
+        </div>
+        <!-- Add more fields if needed -->
+        <button type="submit" class="btn btn-primary">Reserve</button>       
+        <a href="{{ url_for('user_dashboard', email=user.email) }}" class="btn btn-secondary">Cancel</a>
+
+    </form>
+</div>
+{% endblock %}
