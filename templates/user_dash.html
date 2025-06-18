@@ -1,0 +1,86 @@
+{% extends "user_layout.html" %}
+
+{% block content %}
+<!-- <h2>Welcome, {{ user.fullname }}</h2><br> -->
+
+{% if reservations %}
+<div class="container mb-5">
+  <div class="section-title">Recent Parking History</div>
+  <!-- <h4 class="border p-2 bg-light" style="text-align: center;">Recent Parking History</h4> -->
+  <table class="table table-bordered center">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Lot Name</th>
+        <th>Address</th>
+        <th>Pin Code</th>
+        <th>Vehicle No</th>
+        <th>Time</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in reservations %}
+      <tr>
+        <td>{{ r.id }}</td>
+        <td>{{ r.parkingspot.lot.prime_location_name}}</td>
+        <td>{{ r.parkingspot.lot.address}}</td>
+         <td>{{ r.parkingspot.lot.pin_code}}</td>
+        <td>{{ r.vehicle_no }}</td>
+        <td>{{ r.parking_timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+        <td>
+          {% if not r.leaving_timestamp %}
+          <a href="{{ url_for('release_parking', email=user.email, res_id=r.id) }}" class="btn btn-danger">Release</a>
+          {% else %}
+          <span class="badge btn-success">Parked Out</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="w-100 text-center mt-5">No parking history yet.</div>
+{% endif %}
+
+
+
+{% if parkinglots %}
+<div class="container mb-5">
+   <!-- <h4 class="border p-2 bg-light" style="text-align: center;">Parking Lots {{ searched_location }}</h4> -->
+  <h5 class="section-title">Parking Lots {{ searched_location }}</h5>
+  <table class="table table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>ID</th>
+        <th>Lot Name</th>
+        <th>Address</th>
+        <th>Pin Code</th>
+        <th>Available</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for lot in parkinglots %}
+      <tr>
+        <td>{{ lot.id }}</td>
+        <td>{{ lot.prime_location_name }}</td>
+        <td>{{ lot.address }}</td>
+        <td>{{ lot.pin_code }}</td>
+        <td>{{ lot.available_spots }}</td>
+        <td>
+          <a href="{{ url_for('book_parking', email=user.email, lot_id=lot.id) }}" class="btn btn-primary">Book</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<!-- <p>No parking lots found.</p> -->
+<div class="w-100 text-center mt-5">
+    <h4 class="text-danger">No parking lots found.</h4>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "user_layout.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h4 class="mb-4">Release the Parking Spot</h4>
+    <form method="POST" action="{{ url_for('release_parking', res_id=reservation.id, email=user.email) }}">
+        <div class="mb-3">
+            <label for="spot_id" class="form-label">Spot ID:</label>
+            <input type="text" class="form-control" id="spot_id" value="{{ reservation.spot_id }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="vehicle_no" class="form-label">Vehicle Number:</label>
+            <input type="text" class="form-control" id="vehicle_no" value="{{ reservation.vehicle_no }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="start_time" class="form-label">Parking Time:</label>
+            <input type="text" class="form-control" id="start_time" value="{{ reservation.parking_timestamp.strftime('%Y-%m-%d %H:%M') }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="end_time" class="form-label">Releasing Time:</label>
+            <input type="text" class="form-control" id="end_time" value="{{ current_time.strftime('%Y-%m-%d %H:%M') }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="cost" class="form-label">Total Cost:</label>
+            <input type="text" class="form-control" id="cost" value="₹{{ '%.2f' | format(total_cost) }}" readonly>
+        </div>
+
+        <!-- Payment Method Field -->
+        <div class="mb-3">
+            <label for="payment_method" class="form-label">Payment Method:</label>
+            <select name="payment_method" id="payment_method" class="form-select" required>
+                <option value="">--Select--</option>
+                <option value="Cash">Cash</option>
+                <option value="UPI">UPI</option>
+                <option value="Card">Card</option>
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-danger">Pay & Release</button>
+        <a href="{{ url_for('user_dashboard', email=user.email) }}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "admin_layout.html" %}
+{% block content %}
+
+<div class="container mt-5">
+    <h4 class="mb-4">View/Delete Parking Spot</h4>
+
+    <div class="card p-3">
+        <div class="mb-3">
+            <label><strong>ID:</strong></label>
+            <input type="text" class="form-control" value="{{ spot.id }}" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label><strong>Status:</strong></label>
+            <input type="text" class="form-control" value="{{ spot.status }}" readonly>
+        </div>
+
+        {% if reservation %}
+        <hr>
+        <h5 class="mt-3 text-info">Occupied Spot Details</h5>
+        <div class="mb-2"><label>Customer Email:</label> <input class="form-control" value="{{ reservation.user.email }}" readonly></div>
+        <div class="mb-2"><label>Vehicle No.:</label> <input class="form-control" value="{{ reservation.vehicle_no }}" readonly></div>
+        <div class="mb-2"><label>Time of Parking:</label> <input class="form-control" value="{{ reservation.parking_timestamp }}" readonly></div>
+        <div class="mb-2"><label>Cost per Unit:</label> <input class="form-control" value="{{ reservation.parking_cost_per_unit }}" readonly></div>
+        {% endif %}
+    </div>
+
+    <div class="mt-4">
+         {% if reservation %}
+        <button class="btn btn-danger" disabled>Cannot delete an occupied spot</button>
+        {% else %}
+        <form method="POST" action="{{ url_for('delete_spot', spot_id=spot.id, email=email) }}">
+            <button class="btn btn-danger">Delete</button>
+        </form>
+        {% endif %}
+        <a href="{{ url_for('admin_dashboard', email=email) }}" class="btn btn-secondary ms-2">Back</a>
+    </div>
+</div>
+
+{% endblock %}
