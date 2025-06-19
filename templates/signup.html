@@ -10,12 +10,11 @@
 </head>
 
 <body class="h1">
-    <h1 class="head">Welcome to <br>ParkMe;</h1>
     <div class="form-body">
-        <h3 class="center">Signup</h3>
+        <h2 class="center">Signup</h2>
         <form action="/register" method="POST">
             <div class="mb-3">
-                <label for="Input1" class="form-label">Email ID(Username)</label>
+                <label for="Input1" class="form-label">Email ID</label>
                 <input type="email" class="form-control" id="Input1" placeholder="Shiv123@mail.com" name="user_name">
             </div>
             <div class="mb-3">
@@ -34,11 +33,10 @@
             <div class="mb-3">
                 <label for="pincode" class="form-label">Pin Code</label>
                 <input type="text" class="form-control" id="pincode" placeholder="723xxx" name="pincode">
-            </div>
+            </div><br>
             <div style="text-align: center;">
                 <button type="submit" class="btn btn-primary" value="Register">Submit</button>
-                <br>Already a user? <a href="/login">Login</a>
-                <!-- <div class="error">{{msg}}</div> -->
+                <br>Are you a user? <a href="/login">Login</a>
                 {% if msg %}
                 {% if "success" in msg.lower() %}
                 <div class="text-success">{{ msg }}</div>
