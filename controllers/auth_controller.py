@@ -13,7 +13,8 @@ def signin():
         uname=request.form.get("user_name")
         pwd=request.form.get("password")
         usr=UserInfo.query.filter_by(email=uname,password=pwd).first()
-        if usr and usr.password=="admin1": #Existed and admin
+        if usr and usr.id==1: #Existed and admin
+
             return redirect(url_for("admin_dashboard",email=uname))
         elif usr:
             return redirect(url_for("user_dashboard",email=uname))
