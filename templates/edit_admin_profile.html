@@ -1,7 +1,7 @@
 {% extends "admin_layout.html" %} <!-- Inherit navbar, styles, etc. -->
 {% block content %}
 {% if user %}
-<h3 class="center">View/Edit Profile</h3>
+<h3 class="center">Edit Profile</h3>
 
 <form action="{{ url_for('edit_admin_profile',id=user.id, email=email) }}" method="POST">
     <!-- <form action="/edit_admin_profile/{{user.id}}/{{name}}" method="POST"> -->

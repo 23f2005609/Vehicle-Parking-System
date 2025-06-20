@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, flash, jsonify
+from flask import Flask, render_template, request, url_for, redirect
 from models.models import *
 from flask import current_app as app
 import os
@@ -6,7 +6,6 @@ import matplotlib
 matplotlib.use('Agg')  # Use Anti-Grain Geometry backend (no GUI)
 import matplotlib.pyplot as plt
 from io import BytesIO
-from datetime import datetime
 
 
 #Common route for admin dashbaord
@@ -14,15 +13,12 @@ from datetime import datetime
 def admin_dashboard(email):
     user = UserInfo.query.filter_by(email=email).first()
     parkinglots = get_parkinglots()
-
     for lot in parkinglots:
         spots = ParkingSpot.query.filter_by(lot_id=lot.id).all()
-
         available_count = 0
         occupied_count = 0
-
         for spot in spots:
-            # Check if this spot has an active reservation
+            # Check if this spot has an active reservation or not
             active_reservation = ReserveParkingSpot.query.filter_by(spot_id=spot.id, leaving_timestamp=None).first()
             if active_reservation:
                 spot.status = 'O'
@@ -30,9 +26,8 @@ def admin_dashboard(email):
             else:
                 spot.status = 'A'
                 available_count += 1
-            # Save updated spot status in DB
+            # update spot status in DB
             db.session.add(spot)
-
         # Update lot with latest counts
         lot.available_count = available_count
         lot.occupied_count = occupied_count
@@ -121,7 +116,7 @@ def admin_summary(email):
         labels.append(lot.prime_location_name)
         revenues.append(total_revenue)
     
-    plt.figure(figsize=(8, 5))
+    plt.figure(figsize=(6, 5))
     plt.barh(labels, revenues, color='skyblue')
     plt.xlabel("Revenue")
     plt.title("Revenue from Each Parking Lot")
@@ -148,7 +143,7 @@ def admin_summary(email):
         labels.append(lot.prime_location_name)
 
     x = range(len(labels))
-    plt.figure(figsize=(6, 4))
+    plt.figure(figsize=(6, 5))
     plt.bar(x, available_counts, width=0.4, label='Available', color='lightgreen')
     plt.bar([i + 0.4 for i in x], occupied_counts, width=0.4, label='Occupied', color='red')
     plt.xticks([i + 0.2 for i in x], labels, rotation=45)
@@ -164,6 +159,13 @@ def admin_summary(email):
     plt.close()
 
     return render_template('admin_summary.html',email=email,parkinglots=parkinglots,user=user)
+
+#route to see all payments of users by admin
+@app.route('/admin/payments/<email>')
+def view_all_payment(email):
+    user = UserInfo.query.filter_by(email=email).first()
+    payments = Payment.query.order_by(Payment.timestamp.desc()).all()
+    return render_template('admin_pay.html', payments=payments, user=user,email=email)
 
 
 def get_parkinglots():

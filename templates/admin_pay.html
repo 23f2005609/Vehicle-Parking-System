@@ -1,0 +1,34 @@
+{% extends "admin_layout.html" %} <!-- Inherit navbar, styles, etc. -->
+{% block content %}
+<h2 class="center">All Payment Records</h2>
+<table class="table table-bordered table-striped text-center">
+    <thead class="table-success">
+        <tr>
+            <th>ID</th>
+            <th>Lot</th>
+            <th>User</th>
+            <th>Amount</th>
+            <th>Method</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in payments %}
+        <tr>
+            <td>{{ p.id }}</td>
+            <td>{{ p.reservation.spot.lot.prime_location_name }}</td>
+            <td>{{ p.reservation.user.fullname }}</td>
+            <td>₹{{ p.amount }}</td>
+            <td>{{ p.payment_method }}</td>
+            <td>{{ p.status }}</td>
+            <td>{{ p.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="text-center">
+    <a href="{{ url_for('admin_dashboard', email=email) }}" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+{% endblock %}
