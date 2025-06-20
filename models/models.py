@@ -38,14 +38,15 @@ class ParkingSpot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     lot_id = db.Column(db.Integer, db.ForeignKey('parkinglot.id'), nullable=False)
     status = db.Column(db.String(1))  # 'O' = Occupied, 'A' = Available
-    reserveparkingspot=db.relationship("ReserveParkingSpot",cascade="all,delete",backref="parkingspot",lazy=True) #Parkingspot can access all of its reserve parking spots
     #Relations
     lot = db.relationship("ParkingLot", backref="spots")
+    reserveparkingspot=db.relationship("ReserveParkingSpot",cascade="all,delete",backref="parkingspot",lazy=True) #Parkingspot can access all of its reserve parking spots
 
 #Entity 4
 class ReserveParkingSpot(db.Model):
     __tablename__="reserveparkingspot"
     id = db.Column(db.Integer, primary_key=True)
+    lot_id = db.Column(db.Integer, db.ForeignKey('parkinglot.id'),nullable=False)
     spot_id = db.Column(db.Integer, db.ForeignKey('parkingspot.id'),nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('userinfo.id'),nullable=False)
     parking_timestamp = db.Column(db.DateTime, default=datetime.utcnow) #default=datetime.utcnow: It ensures the timestamp is set only at the moment of record creation.
@@ -54,8 +55,8 @@ class ReserveParkingSpot(db.Model):
     vehicle_no = db.Column(db.String(20), nullable=False) 
     # Relations
     user= db.relationship("UserInfo", backref="reservations")
+    lot = db.relationship("ParkingLot", backref="reservations")
     spot = db.relationship("ParkingSpot", backref="reservations")
-    payment = db.relationship('Payment', backref='reservation', uselist=False)
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -64,3 +65,5 @@ class Payment(db.Model):
     payment_method = db.Column(db.String(50), nullable=False)  # e.g., 'Cash', 'Card', 'UPI'
     status = db.Column(db.String(20), nullable=False)  
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    #Relations
+    reservation = db.relationship("ReserveParkingSpot", backref=db.backref("payment", uselist=False, cascade="all, delete", passive_deletes=True))
