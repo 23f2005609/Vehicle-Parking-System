@@ -37,20 +37,18 @@
         {% else %}
         <p>No spots available in this lot.</p>
         {% endif %}
-
     </div>
     {% endfor %}
     {% else %}
     <div class="w-100 text-center mt-5">
-            <h4 class="text-danger">No parking lots found.</h4>
-        </div>
-
+        <h4 class="text-danger">No parking lots found.</h4>
+    </div>
     {% endif %}
 </div>
-{% if not is_search %}
+{% if not is_search %} <!--when no_search is false display the code below-->
 <!-- Add Lot Button -->
 <div class="text-center mt-4">
-    <a href="{{ url_for('add_lot', email=email) }}" class="btn btn-primary">+ Add Lot</a>
+    <a href="{{ url_for('add_lot', email=email) }}" class="btn btn-primary">Add Lot</a>
 </div>
 {% endif %}
 {% endblock %}
