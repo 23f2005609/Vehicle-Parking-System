@@ -1,4 +1,4 @@
-from flask import  render_template, request, url_for, redirect, flash, jsonify
+from flask import  render_template, request, url_for, redirect
 from models.models import *
 from flask import current_app as app
 
@@ -10,11 +10,11 @@ def home():
 @app.route("/login", methods=["GET","POST"])
 def signin():
     if request.method=="POST":
-        uname=request.form.get("user_name")
+        #retirives form values from login form
+        uname=request.form.get("user_name") 
         pwd=request.form.get("password")
-        usr=UserInfo.query.filter_by(email=uname,password=pwd).first()
-        if usr and usr.id==1: #Existed and admin
-
+        usr=UserInfo.query.filter_by(email=uname,password=pwd).first() 
+        if usr and usr.id==1: #Existed and i am assuming the first registerd will be the admin the users
             return redirect(url_for("admin_dashboard",email=uname))
         elif usr:
             return redirect(url_for("user_dashboard",email=uname))
@@ -23,9 +23,10 @@ def signin():
         
     return render_template("login.html",msg="")
 
-@app.route("/register", methods=["GET","POST"])
+@app.route("/register", methods=["GET","POST"]) #GET- while showing form and POST- while submiting form
 def signup():
     if request.method=="POST":
+        #gets input from registration form
         uname=request.form.get("user_name")
         pwd=request.form.get("password")
         fullname=request.form.get("fullname")
@@ -34,6 +35,7 @@ def signup():
         usr=UserInfo.query.filter_by(email=uname,password=pwd).first()
         if usr:
             return render_template("signup.html",msg="Soory, this mail already registered!!")
+        #creates new userinfo and saves it to db
         new_usr=UserInfo(email=uname,password=pwd,fullname=fullname,address=address,pin_code=pin)
         db.session.add(new_usr)
         db.session.commit()
