@@ -1,16 +1,24 @@
 {% extends "user_layout.html" %}
 {% block content %}
 <div class="container">
-    <h2 class="mt-4 mb-3 text-center">{{ name }}'s Parking Summary</h2>
+    <h2 class="mt-4 mb-3 text-center">📊 {{ name }}'s Parking Summary</h2><br>
 
     <div class="row justify-content-center">
         <div class="col-md-6 mb-4">
             <div class="card p-3 shadow-sm">
-                <h5 class="text-center">Usage Bar Chart</h5>
+                <h4 class="text-center">🅿 Parking Usage</h4>
                 <img src="{{ url_for('static', filename='user_spot_summary_bar.png') }}" class="img-fluid" alt="User Bar">
             </div>
         </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card p-3 shadow-sm">
+                <h4 class="text-center">💰Spending Per Lot</h4>
+                <img src="{{ url_for('static', filename='user_spot_summary_pie.png') }}" class="img-fluid" alt="Spending Pie Chart">
+            </div>
+        </div>
     </div>
+
 
     <div class="text-center">
         <a href="{{ url_for('user_dashboard', email=user.email) }}" class="btn btn-secondary">Back to Dashboard</a>

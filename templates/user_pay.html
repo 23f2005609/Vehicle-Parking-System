@@ -1,0 +1,30 @@
+{% extends "user_layout.html" %}
+{% block content %}
+
+<h2 class="center">{{ user.fullname }}'s Payment History</h2>
+<table class="table table-bordered table-striped text-center">
+  <thead class="table-success">
+    <tr>
+      <th>Lot</th>
+      <th>Amount</th>
+      <th>Method</th>
+      <th>Status</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in payments %}
+    <tr>
+      <td>{{ p.reservation.spot.lot.prime_location_name }}</td>
+      <td>₹{{ p.amount }}</td>
+      <td>{{ p.payment_method }}</td>
+      <td>{{ p.status }}</td>
+      <td>{{ p.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<div class="text-center">
+        <a href="{{ url_for('user_dashboard', email=email) }}" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+{% endblock %}
