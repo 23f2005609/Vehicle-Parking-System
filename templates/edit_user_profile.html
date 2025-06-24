@@ -1,10 +1,10 @@
 {% extends "user_layout.html" %}  <!-- Inherit navbar, styles, etc. -->
 {% block content %}
 {% if user %}
-<h3 class="center">View/Edit Profile</h3>
+<h3 class="center">Edit Profile</h3>
 
-<!-- <form action="{{ url_for('view_user_profile', user_id=user.id) }}" method="POST"> -->
-<form action="{{ url_for('edit_user_profile', id=user.id, name=user.fullname) }}" method="POST">
+    <form action="{{ url_for('edit_user_profile', id=user.id, email=user.email) }}" method="POST">
+
 
     <div class="mb-3">
         <label for="email" class="form-label">Email:</label>
