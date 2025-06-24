@@ -2,20 +2,20 @@
 {% block content %}
 
 <div class="container">
-    <h2 class="mt-4 mb-3 text-center">Admin Summary Dashboard</h2><br>
+    <h2 class="mt-4 mb-3 text-center"> 📊 Admin Summary Dashboard</h2><br>
 
     <div class="row justify-content-center">
         <div class="col-md-6 mb-4">
             <div class="card p-3 shadow-sm">
-                <h4 class="text-center">Revenue from each parking lot</h4>
-                <img src="{{ url_for('static', filename='pie_chart.png') }}" class="img-fluid" alt="Revenue Pie Chart">
+                <h4 class="text-center">💰 Revenue from each parking lot</h4>
+                <img src="{{ url_for('static', filename='Revenue_bar_chart.png') }}" class="img-fluid" alt="Revenue Pie Chart">
             </div>
         </div>
 
         <div class="col-md-6 mb-4">
             <div class="card p-3 shadow-sm">
-                <h4 class="text-center">Summary on available and occupied spots</h4>
-                <img src="{{ url_for('static', filename='bar_chart.png') }}" class="img-fluid" alt="Occupancy Bar Chart">
+                <h4 class="text-center">🟢Available and 🔴Occupied spots</h4>
+                <img src="{{ url_for('static', filename='Occupied_available_bar_chart.png') }}" class="img-fluid" alt="Occupancy Bar Chart">
             </div>
         </div>
     </div>
