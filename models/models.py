@@ -49,7 +49,7 @@ class ReserveParkingSpot(db.Model):
     lot_id = db.Column(db.Integer, db.ForeignKey('parkinglot.id'),nullable=False)
     spot_id = db.Column(db.Integer, db.ForeignKey('parkingspot.id'),nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('userinfo.id'),nullable=False)
-    parking_timestamp = db.Column(db.DateTime, default=datetime.utcnow) #default=datetime.utcnow: It ensures the timestamp is set only at the moment of record creation.
+    parking_timestamp = db.Column(db.DateTime, default=datetime.utcnow) #default=datetime.utcnow: It ensures the timestamp is set only at the moment of booking.
     leaving_timestamp = db.Column(db.DateTime)
     parking_cost_per_unit = db.Column(db.Float,default=0.0)
     vehicle_no = db.Column(db.String(20), nullable=False) 
@@ -57,13 +57,14 @@ class ReserveParkingSpot(db.Model):
     user= db.relationship("UserInfo", backref="reservations")
     lot = db.relationship("ParkingLot", backref="reservations")
     spot = db.relationship("ParkingSpot", backref="reservations")
+    payment = db.relationship('Payment', backref='reservation', uselist=False, cascade='all, delete', passive_deletes=True)
+
 
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    reservation_id = db.Column(db.Integer, db.ForeignKey('reserveparkingspot.id'), nullable=False)
+    reservation_id = db.Column(db.Integer, db.ForeignKey('reserveparkingspot.id', ondelete='CASCADE'), unique=True, nullable=False)
     amount = db.Column(db.Float, nullable=False)
     payment_method = db.Column(db.String(50), nullable=False)  # e.g., 'Cash', 'Card', 'UPI'
     status = db.Column(db.String(20), nullable=False)  
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    #Relations
-    reservation = db.relationship("ReserveParkingSpot", backref=db.backref("payment", uselist=False, cascade="all, delete", passive_deletes=True))
+    
