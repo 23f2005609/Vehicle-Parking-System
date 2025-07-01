@@ -1,9 +1,18 @@
 {% extends "admin_layout.html" %}
 {% block content %}
 
+<!-- flash messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="alert alert-{{ category }} alert-dismissible fade show text-center" role="alert">
+        <h5>{{ message }}</h5>
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 <!-- Page Title -->
 <div class="section-title">Parking Lots</div>
-
 <!-- Parking Lot Cards -->
 <div class="d-flex flex-wrap justify-content-start">
     {% if parkinglots %}
@@ -48,7 +57,7 @@
 {% if not is_search %} <!--when no_search is false display the code below-->
 <!-- Add Lot Button -->
 <div class="text-center mt-4">
-    <a href="{{ url_for('add_lot', email=email) }}" class="btn btn-primary">Add Lot</a>
+    <a href="{{ url_for('add_lot', email=email) }}" class="btn btn-outline-success">+Add Parking Lot</a>
 </div>
 {% endif %}
 {% endblock %}

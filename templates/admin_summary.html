@@ -14,14 +14,14 @@
 
         <div class="col-md-6 mb-4">
             <div class="card p-3 shadow-sm">
-                <h4 class="text-center">🟢Available and 🔴Occupied spots</h4>
+                <h4 class="text-center">🟢Available & 🔴Occupied spots</h4>
                 <img src="{{ url_for('static', filename='Occupied_available_bar_chart.png') }}" class="img-fluid" alt="Occupancy Bar Chart">
             </div>
         </div>
     </div>
 
     <div class="text-center">
-        <a href="{{ url_for('admin_dashboard', email=email) }}" class="btn btn-secondary">Back to Dashboard</a>
+        <a href="{{ url_for('admin_dashboard', email=email) }}" class="btn btn-secondary">Back</a>
     </div>
 </div>
 
