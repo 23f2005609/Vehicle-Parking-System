@@ -32,23 +32,9 @@ def user_search(email):
 
         if parkinglots:
             parkinglots = cal_available_spots(parkinglots) #if parking lot found it updates with avail spots by calling helper function
-            # Get lot IDs from search results
-            lot_ids = [lot.id for lot in parkinglots]
-            # Filter user’s reservations that match these lot_ids
-            reservations = (
-                ReserveParkingSpot.query
-                .join(ParkingSpot)
-                .filter(
-                    ReserveParkingSpot.user_id == user.id,
-                    ParkingSpot.lot_id.in_(lot_ids)
-                )
-                .all()
-            )
-        else:
-            # No lots found —> no reservations to show
-            reservations = []
+        
+        return render_template("user_dash.html", user=user, email=email, parkinglots=parkinglots, searched_location=search_txt)
 
-        return render_template("user_dash.html", user=user, email=email, parkinglots=parkinglots, searched_location=search_txt,reservations=reservations)
     return redirect(url_for("user_dashboard", email=email))
 
 
