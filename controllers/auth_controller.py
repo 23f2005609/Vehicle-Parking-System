@@ -1,4 +1,4 @@
-from flask import  render_template, request, url_for, redirect
+from flask import  render_template, request, url_for, redirect, flash
 from models.models import *
 from flask import current_app as app
 
@@ -19,9 +19,10 @@ def signin():
         elif usr:
             return redirect(url_for("user_dashboard",email=uname))
         else:
-            return render_template("login.html", msg="Invalid user credentials...")
+            flash("Invalid user credentials...", "danger")
+            return redirect(url_for("signin"))
         
-    return render_template("login.html",msg="")
+    return render_template("login.html")
 
 @app.route("/register", methods=["GET","POST"]) #GET- while showing form and POST- while submiting form
 def signup():
@@ -34,11 +35,13 @@ def signup():
         pin=request.form.get("pincode")
         usr=UserInfo.query.filter_by(email=uname,password=pwd).first()
         if usr:
-            return render_template("signup.html",msg="Soory, this mail already registered!!")
+            flash("This email is already registered, try login now!", "danger")
+            return redirect(url_for("signin"))
         #creates new userinfo and saves it to db
         new_usr=UserInfo(email=uname,password=pwd,fullname=fullname,address=address,pin_code=pin)
         db.session.add(new_usr)
         db.session.commit()
-        return render_template("login.html",msg="Registration Successfull, try login now!")
-    return render_template("signup.html",msg="")
+        flash("Registration Successfull, try login now!", "success")
+        return redirect(url_for("signin"))
+    return render_template("signup.html")
 

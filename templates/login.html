@@ -12,6 +12,16 @@
 
 <body class="h1">
     <div class="form-body">
+        <!-- flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show text-center" role="alert">
+            <h5>{{ message }}</h5>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         <h2 class="center">Login</h2>
         <form action="/login" method="POST">
             <div class="mb-3">
@@ -26,13 +36,6 @@
                     <button type="submit" class="btn btn-primary" value="Login">Login</button>
                     <br>
                     New user? <a href="/register">Signup</a>
-                    {% if msg %}
-                    {% if "success" in msg.lower() %}
-                    <div class="text-success">{{ msg }}</div>
-                    {% else %}
-                    <div class="text-danger">{{ msg }}</div>
-                    {% endif %}
-                    {% endif %}
                 </div>
         </form>
     </div>
