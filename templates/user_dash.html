@@ -1,9 +1,21 @@
 {% extends "user_layout.html" %}
 {% block content %}
 
-{% if reservations %}
+<!-- flash messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible fade show text-center" role="alert">
+  <h5>{{ message }}</h5>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+{% if not searched_location %}
 <div class="container mb-5">
   <div class="section-title">Recent Parking History</div>
+{% if reservations %}
   <table class="table table-bordered table-striped text-center">
     <thead class="table-success">
       <tr>
@@ -38,14 +50,20 @@
     </tbody>
   </table>
 </div>
+{% else %}
+<div class="w-100 text-center mt-5">
+  <h4 class="text-danger">No recent parking history.</h4><br>
+</div>
+{% endif %}
 {% endif %}
 
 
-{% if parkinglots %}
+
 <div class="container mb-5">
   <h5 class="section-title">Parking Lots {{ searched_location }}</h5>
+  {% if parkinglots %}
   <table class="table table-bordered table-striped text-center">
-    <thead class="table-success">
+    <thead class="table-warning">
       <tr>
         <th>ID</th>
         <th>Lot Name</th>
@@ -64,8 +82,7 @@
         <td>{{ lot.pin_code }}</td>
         <td>{{ lot.available_spots }}</td>
         <td>
-          <a href="{{ url_for('book_parking', email=user.email, lot_id=lot.id) }}"
-            class="btn btn-outline-primary">Book</a>
+          <a href="{{ url_for('book_parking', email=user.email, lot_id=lot.id) }}" class="btn btn-primary">Book</a>
         </td>
       </tr>
       {% endfor %}
