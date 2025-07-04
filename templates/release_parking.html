@@ -1,8 +1,8 @@
 {% extends "user_layout.html" %}
 {% block content %}
 <div class="container mt-5">
-    <h4 class="mb-4">Release the Parking Spot</h4>
-    <form method="POST" action="{{ url_for('release_parking', res_id=reservation.id, email=user.email) }}">
+    <h4 class="center">Release the Parking Spot</h4>
+    <form method="POST" action="{{ url_for('release_lot', res_id=reservation.id, email=user.email) }}">
         <div class="mb-3">
             <label for="spot_id" class="form-label">Spot ID:</label>
             <input type="text" class="form-control" id="spot_id" value="{{ reservation.spot_id }}" readonly>
@@ -36,8 +36,8 @@
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-danger">Pay & Release</button>
-        <a href="{{ url_for('user_dashboard', email=user.email) }}" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-danger">Release</button>
+        <a href="{{ url_for('user_dash', email=user.email) }}" class="btn btn-secondary">Cancel</a>
     </form>
 </div>
 {% endblock %}

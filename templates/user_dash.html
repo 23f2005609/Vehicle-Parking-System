@@ -12,12 +12,14 @@
 {% endif %}
 {% endwith %}
 
-{% if not searched_location %}
+
+{% if not s_txt %}
 <div class="container mb-5">
+   <h1 class="center">Welcome, {{user.fullname}} ! </h1>
   <div class="section-title">Recent Parking History</div>
 {% if reservations %}
   <table class="table table-bordered table-striped text-center">
-    <thead class="table-success">
+    <thead class="table-info">
       <tr>
         <th>ID</th>
         <th>Lot Name</th>
@@ -39,7 +41,7 @@
         <td>{{ r.parking_timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
         <td>
           {% if not r.leaving_timestamp %} <!-- the user hasn't released the spot -->
-          <a href="{{ url_for('release_parking', email=user.email, res_id=r.id) }}"
+          <a href="{{ url_for('release_lot', email=user.email, res_id=r.id) }}"
             class="btn btn-outline-danger">Release</a>
           {% else %}
           <span class="badge btn-success">Parked Out</span>
@@ -52,7 +54,7 @@
 </div>
 {% else %}
 <div class="w-100 text-center mt-5">
-  <h4 class="text-danger">No recent parking history.</h4><br>
+  <h4 class="text-danger">No recent parking history!</h4><br>
 </div>
 {% endif %}
 {% endif %}
@@ -60,10 +62,10 @@
 
 
 <div class="container mb-5">
-  <h5 class="section-title">Parking Lots {{ searched_location }}</h5>
+  <h5 class="section-title">Parking Lots {{ s_txt }}</h5>
   {% if parkinglots %}
   <table class="table table-bordered table-striped text-center">
-    <thead class="table-warning">
+    <thead class="table-info">
       <tr>
         <th>ID</th>
         <th>Lot Name</th>
@@ -82,7 +84,7 @@
         <td>{{ lot.pin_code }}</td>
         <td>{{ lot.available_spots }}</td>
         <td>
-          <a href="{{ url_for('book_parking', email=user.email, lot_id=lot.id) }}" class="btn btn-primary">Book</a>
+          <a href="{{ url_for('reserve_lot', email=user.email, lot_id=lot.id) }}" class="btn btn-primary">Book</a>
         </td>
       </tr>
       {% endfor %}
@@ -91,7 +93,7 @@
 </div>
 {% else %}
 <div class="w-100 text-center mt-5">
-  <h4 class="text-danger">No parking lots found.</h4>
+  <h4 class="text-danger">No parking lots found!</h4>
 </div>
 {% endif %}
 {% endblock %}

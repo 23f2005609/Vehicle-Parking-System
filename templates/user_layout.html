@@ -11,34 +11,34 @@
 
 <body>
     <!-- Navbar -->
-    <h1 class="logo"><span class="park">Park</span><span class="c">C;</span></h1>
-    <nav class="navbar navbar-dark bg-primary">
+    <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid d-flex justify-content-between align-items-center w-100">
-            <span class="navbar-text">Welcome, {{user.fullname}} </span>
+            <img class="ParkC" src="{{ url_for('static' , filename='/styles/images/PARKC;.png') }}" alt="ParkC;">
             <ul class="navbar-nav flex-row nav-center gap-4">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('user_dash', email=user.email) }}">Home</a>
+                </li>
                 <li class="nav-item"><a class="nav-link"
-                        href="{{ url_for('user_dashboard', email=user.email) }}">Home</a></li>
+                        href="{{ url_for('summary_user', email=user.email) }}">Summary</a></li>
                 <li class="nav-item"><a class="nav-link"
-                        href="{{ url_for('user_summary', email=user.email) }}">Summary</a></li>
-                <li class="nav-item"><a class="nav-link"
-                        href="{{ url_for('edit_user_profile', id=user.id, email=user.email) }}">Profile</a></li>
-                <li class="nav-item"><a class="nav-link"
-                        href="{{ url_for('user_payment', email=user.email) }}">Payments</a></li>
+                        href="{{ url_for('update_user_profile', id=user.id, email=user.email) }}">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('user_pay', email=user.email) }}">Payments</a>
+                </li>
 
                 <li class="nav-item">
                     <form method="POST" action="{{ url_for('user_search', email=user.email) }}"
                         class="d-flex align-items-center">
-                        <select class="form-select me-2" name="search_type" style="width: auto;">
-                            <option value="location">Address</option>
+                        <select class="form-select me-2" name="s_type" style="width: auto;" >
+                            <option value="" disabled selected>Search by</option>
+                            <option value="address">Address</option>
                             <option value="pin_code">PinCode</option>
+                            <option value="lot_name">Name of Lot</option>
                         </select>
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                            name="search_txt" id="search_txt">
-                        <button type="submit" class="btn btn-outline-light">Search</button>
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="s_txt" id="s_txt">
+                        <button type="submit" class="btn btn-warning">Search</button>
                     </form>
                 </li>
             </ul>
-            <a type="submit" class="btn btn-outline-dark" href="/login">Logout</a>
+            <a type="submit" class="btn btn-outline-light" href="/login">Logout</a>
 
         </div>
     </nav>
