@@ -3,7 +3,7 @@ ParkC; - Vehicle-Parking-System
 This is a Flask-based Vehicle Parking Management System that allows Admins to create, manage parking lots, can see summary charts, edit profile and view all user payments. User can book parking lots where available spots will automatically alloted, can see summary charts, edit profile and see his payment transactions.
 
 
-Steps To Run the Project:-
+-Steps To Run the Project:-
 
 1. Clone the Repository
 
