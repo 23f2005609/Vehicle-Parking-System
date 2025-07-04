@@ -2,13 +2,35 @@
 {% block content %}
 
 <div class="container">
-    <h2 class="mt-4 mb-3 text-center"> 📊 Admin Summary Dashboard</h2><br>
+    <h2 class="mt-4 text-center"> 📊 Admin Summary Dashboard</h2>
+     <div class="container my-4">
+  <div class="row text-center">
+        <!-- Total Parkings lots -->
+    <div class="col-md-6 mb-1">
+        <div class="card bg-warning">
+        <div class="card-body">
+          <h5 class="card-title text-dark">Parking Lots Created</h5>
+          <p class="display-5 fw-bold text-dark">{{ total_lots }}</p>
+        </div>
+      </div>
+    </div>
+    <!-- Total Amount Spent -->
+    <div class="col-md-6 mb-1">
+      <div class="card bg-dark">
+        <div class="card-body">
+          <h5 class="card-title text-light">Total Amount Received</h5>
+          <p class="display-5 fw-bold text-light">₹ {{ "%.2f"|format(total_amount) }}</p>
+        </div>
+      </div>
+    </div>
 
+  </div>
+</div>
     <div class="row justify-content-center">
         <div class="col-md-6 mb-4">
             <div class="card p-3 shadow-sm">
-                <h4 class="text-center">💰 Revenue from each parking lot</h4>
-                <img src="{{ url_for('static', filename='Revenue_bar_chart.png') }}" class="img-fluid" alt="Revenue Pie Chart">
+                <h4 class="text-center">💰 Revenue per lot</h4>
+                <img src="{{ url_for('static', filename='Revenue_pie_chart.png') }}" class="img-fluid" alt="Revenue Pie Chart">
             </div>
         </div>
 
@@ -21,7 +43,7 @@
     </div>
 
     <div class="text-center">
-        <a href="{{ url_for('admin_dashboard', email=email) }}" class="btn btn-secondary">Back</a>
+        <a href="{{ url_for('admin_dash', email=email) }}" class="btn btn-secondary">Back</a>
     </div>
 </div>
 
