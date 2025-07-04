@@ -8,35 +8,35 @@
 </head>
 <body>
     <!-- Navbar -->
-    <h1 class="logo"><span class="park">Park</span><span class="c">C;</span></h1>
-    <nav class="navbar navbar-dark bg-primary">
+    <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid d-flex justify-content-between align-items-center w-100">
-            <span class="navbar-text">Welcome, {{user.fullname}}</span>
+            <img class="ParkC" src="{{ url_for('static' , filename='/styles/images/PARKC;.png') }}" alt="ParkC;">
             <ul class="navbar-nav flex-row nav-center gap-4">
                 <li class="nav-item"><a class="nav-link"
-                        href="{{ url_for('admin_dashboard', email=user.email) }}">Home</a></li>
+                        href="{{ url_for('admin_dash', email=user.email) }}">Home</a></li>
                 <li class="nav-item"><a class="nav-link"
-                        href="{{ url_for('registered_users', email=user.email) }}">Users</a></li>
+                        href="{{ url_for('all_registered_users', email=user.email) }}">Users</a></li>
                 <li class="nav-item"><a class="nav-link "
-                        href="{{ url_for('admin_summary', email=user.email) }}">Summary</a></li>
+                        href="{{ url_for('summary_admin', email=user.email) }}">Summary</a></li>
                 <li class="nav-item"><a class="nav-link"
-                        href="{{ url_for('edit_admin_profile', id=user.id, email=user.email) }}">Profile</a></li>
+                        href="{{ url_for('update_admin_profile', id=user.id, email=user.email) }}">Profile</a></li>
                 <li class="nav-item"><a class="nav-link"
-                        href="{{ url_for('view_all_payment', email=user.email) }}">Payments</a></li>
+                        href="{{ url_for('all_payment', email=user.email) }}">Payments</a></li>
                 <li>
                     <form class="d-flex" method="POST" action="{{ url_for('admin_search', email=user.email) }}">
-                        <select class="form-select me-2" name="search_type" style="width: auto;">
+                        <select class="form-select me-2" name="s_type" >
+                            <option value="" disabled selected>Search by</option>
                             <option value="user_id">User ID</option>
-                            <option value="location">Location</option>
+                            <option value="address">Address</option>
                             <option value="pin_code">PinCode</option>
                         </select>
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                            name="search_txt" id="search_txt">
-                        <button class="btn btn-outline-light" type="submit">Search</button>
+                            name="s_txt" id="s_txt" style="width: auto;">
+                        <button class="btn btn-warning" type="submit">Search</button>
                     </form>
                 </li>
             </ul>
-            <a type="submit" class="btn btn-outline-dark" href="{{ url_for('signin') }}">Logout</a>
+            <a type="submit" class="btn btn-outline-light" href="{{ url_for('user_signin') }}">Logout</a>
         </div>
     </nav>
     {%block content%}

@@ -6,17 +6,15 @@
 </head>
 <body class="p-4">
     <div class="container">
-        <h2 class="mb-4">Occupied Spot Details</h2>
+        <h2 class="mb-4 text-center">Occupied Spot Details</h2>
 
         <div class="card">
-            <div class="card-header bg-warning">
-                Reservation Details
-            </div>
+            <div class="card-header bg-warning text-center">Reservation Details</div>
             <div class="card-body">
                 <p><strong>Spot ID:</strong> {{ spot.id }}</p>
                 <p><strong>Vehicle No:</strong> {{ reservation.vehicle_no }}</p>
-                <p><strong>Customer ID:</strong> {{ reservation.user.id }}</p>
-                <p><strong>Customer Name:</strong> {{ reservation.user.fullname }}</p>
+                <p><strong>User ID:</strong> {{ reservation.user.id }}</p>
+                <p><strong>User Name:</strong> {{ reservation.user.fullname }}</p>
                 <p><strong>Email:</strong> {{ reservation.user.email }}</p>
                 <p><strong>Parking Time:</strong> {{ reservation.parking_timestamp.strftime('%d/%m/%Y %H:%M') }}</p>
                 <p><strong>Estimated Parking Cost:</strong> ₹{{ reservation.parking_cost_per_unit}}</p>

@@ -7,29 +7,47 @@
 </head>
 
 <body class="p-4">
-
     <div class="container">
-        <h2 class="mb-4">View/Delete Parking Spot</h2>
+        <h2 class="mb-4 text-center">Parking Spot</h2>
 
         <div class="card mb-4">
-            <div class="card-header bg-warning">
-                Spot Details
-            </div>
+            <div class="card-header bg-warning text-center">Spot Details</div>
             <div class="card-body">
-    <p><strong>Spot ID:</strong> {{ spot.id }}</p>
-    <p><strong>Status:</strong> {{ spot.status }}</p>
+                <!-- flash messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show text-center" role="alert">
+                    <h5>{{ message }}</h5>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                
+                <h3><strong>Spot ID:</strong> {{ spot.id }}</h3><br>
+                {% if spot.status=='O' and reservation %}
+                <h3><strong>Status:</strong> <a class="btn btn-danger" href="{{ url_for('occupied_info', spot_id=spot.id, email=email) }}"
+                        style="text-decoration: none;"><b>{{ spot.status }}</b></a></h3>
+                {% else %}
+                <h3><strong>Status:</strong> <b class="btn btn-success">{{ spot.status }}</b></h3>
+                {% endif %}
 
-    {% if reservation %}
-        <p class="text-danger">Note:Cannot delete occupied parking spot.</p>
-        <a href="{{ url_for('occupied_details', spot_id=spot.id, email=email) }}" class="btn btn-sm btn-danger">View Occupied Details</a>
-        <a href="{{ url_for('admin_dashboard', email=email) }}" class="btn btn-secondary">Back</a>
-    {% else %}
-        <a href="{{ url_for('delete_spot', spot_id=spot.id, email=email) }}" class="btn btn-danger">Delete</a>
-        <a href="{{ url_for('admin_dashboard', email=email) }}" class="btn btn-secondary">Back</a>
-    {% endif %}
-</div>
-
-
+                {% if reservation %}
+                <div class="text-center">
+                    <a href="{{ url_for('delete_parkingspot', spot_id=spot.id, email=email) }}"
+                        class="btn btn-outline-danger">Delete</a>
+                    <a href="{{ url_for('admin_dash', email=email) }}" class="btn btn-secondary">Back</a>
+                </div>
+                {% else %}
+                <div class="text-center">
+                    <a href="{{ url_for('delete_parkingspot', spot_id=spot.id, email=email) }}"
+                        class="btn btn-outline-danger">Delete</a>
+                    <a href="{{ url_for('admin_dash', email=email) }}" class="btn btn-secondary">Back</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -1,33 +1,31 @@
 {%extends "admin_layout.html"%} <!--Inherited all nav feature-->
 {%block content%}
-           <h3 class="center">New Parking Lot</h3>
-                <form action="{{ url_for('add_lot', email=email) }}" method="POST">
-                    <div class="mb-3">
-                        <label for="Input1" class="form-label">Prime Location Name:</label>
-                        <input type="text" class="form-control" id="Input1" placeholder="Prakash Parkings" name="prime_location_name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address:</label>
-                        <textarea class="form-control" id="address" placeholder=" 11, Satish Apartments, Rahim Nagar", name="address"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="pincode" class="form-label">Pin Code:</label>
-                        <input type="text" class="form-control" id="pincode" placeholder="723xxx" name="pin_code">
-                    </div>
-                    <div class="mb-3">
-                        <label for="Input2" class="form-label">Price(per hour):</label>
-                        <input type="float" class="form-control" id="Input2" placeholder="0" name="price">
-                    </div>
-                    <div class="mb-3">
-                        <label for="Input3" class="form-label">Maximum Spots:</label>
-                        <input type="text" class="form-control" id="Input3" placeholder="0" name="maximum_number_of_spots">
-                    </div>
-                    
-                    
-                    <div style="text-align: center;">
-                        <button type="submit" class="btn btn-primary" value="Register">Add</button>
-                        <span><a href="{{ url_for('admin_dashboard', email=user.email) }}" type="button" class="btn btn-primary">Cancel</a></span>
-                        <div class="success">{{msg}}</div>
-                    </div>
-                </form>
+<h3 class="text-center mt-4">Add New Parking Lot</h3>
+<form action="{{ url_for('add_parking_lot', email=email) }}" method="POST">
+    <div class="mb-3">
+        <label for="Input1" class="form-label">Prime Location Name:</label>
+        <input type="text" class="form-control" id="Input1" placeholder="Prakash Parkings" name="prime_location_name">
+    </div>
+    <div class="mb-3">
+        <label for="address" class="form-label">Address:</label>
+        <textarea class="form-control" id="address" placeholder=" 11, Satish Apartments, Rahim Nagar" ,
+            name="address"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="pincode" class="form-label">Pin Code:</label>
+        <input type="text" class="form-control" id="pincode" placeholder="723xxx" name="pin_code">
+    </div>
+    <div class="mb-3">
+        <label for="Input2" class="form-label">Price(per hour):</label>
+        <input type="float" class="form-control" id="Input2" placeholder="0" name="price">
+    </div>
+    <div class="mb-3">
+        <label for="Input3" class="form-label">Maximum Spots:</label>
+        <input type="text" class="form-control" id="Input3" placeholder="0" name="maximum_number_of_spots">
+    </div>
+    <div style="text-align: center;">
+        <button type="submit" class="btn btn-success" value="Register">Add</button>
+        <a href="{{ url_for('admin_dash', email=user.email) }}" type="button" class="btn btn-primary">Cancel</a>
+    </div>
+</form>
 {%endblock%}
