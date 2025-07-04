@@ -43,7 +43,6 @@ app=setup_app()
 from controllers.auth_controller import *
 from controllers.admin_controller import *
 from controllers.user_controller import *
-from controllers.parkinglot_controller import *
 
 if __name__=="__main__":
     app.run(debug=True)
