@@ -2,19 +2,18 @@ from flask_restful import Resource, Api
 from flask import request
 from  models.models import *
 
-api=Api()
+api=Api() # creating Restful api object
 
 class ParkingLotApi(Resource):
-    
-    #Reading of dat
-    def get(self):
+    #Reading of data
+    def get(self): # fetching all parking lots
         lots=ParkingLot.query.all()
         Lots_json=[]
         for lot in lots:
             Lots_json.append({'id':lot.id, 'prime_location_name':lot.prime_location_name, 'price':lot.price, 'address':lot.address, 'pin_code':lot.pin_code, 'maximum_number_of_spots':lot.maximum_number_of_spots})
         return Lots_json
     
-    #Creating data
+    #adding new parking lot
     def post(self):
         prime_location_name=request.json.get('prime_location_name')
         price=request.json.get('price')
@@ -23,9 +22,8 @@ class ParkingLotApi(Resource):
         max_spots=request.json.get('maximum_number_of_spots')
         new_lot=ParkingLot(prime_location_name=prime_location_name,price=price,address=address,pin_code=pin_code,maximum_number_of_spots=max_spots)
         db.session.add(new_lot)
-        db.session.flush()  # Assigns ID without committing
-        # db.session.commit()  # new_lot.id is assigned here
-        # Create parking spots 
+        db.session.flush()  # we are using flush to get the id of the new lot  without committing nad to ensure lots and spots are saved together
+        # it automatically creates parking spots
         for _ in range(int(max_spots)):
             spot = ParkingSpot(lot_id=new_lot.id, status='A')
             db.session.add(spot)
@@ -45,9 +43,9 @@ class ParkingLotApi(Resource):
             db.session.commit()
             return {"message":"Lot Updated"},200
         else:
-            return {"message":"Lot id not found!"},404
+            return {"message":"Lot not found!"},404
 
-    #Deleting Data
+    #Deleting parking lot
     def delete(self,id):
         lot=ParkingLot.query.filter_by(id=id).first()
         if lot:
@@ -58,6 +56,7 @@ class ParkingLotApi(Resource):
             return {"message":"Lot id not found!"},404
 
 
+#it for search parking lot by its id
 class ParkingLotSearchApi(Resource):
     def get(self,id):
         lot=ParkingLot.query.filter_by(id=id).first()
