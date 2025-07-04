@@ -21,19 +21,19 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
-        <h2 class="center">Signup</h2>
+        <h1 class="center">Signup</h1>
         <form action="/register" method="POST">
             <div class="mb-3">
-                <label for="Input1" class="form-label">Email ID</label>
-                <input type="email" class="form-control" id="Input1" placeholder="Shiv123@mail.com" name="user_name">
+                <label for="email" class="form-label">Email ID</label>
+                <input type="email" class="form-control" id="email" placeholder="Shiv123@mail.com" name="user_name">
             </div>
             <div class="mb-3">
-                <label for="Input2" class="form-label">Password</label>
-                <input type="password" class="form-control" id="Input2" placeholder="name123" name="password">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="name123" name="password">
             </div>
             <div class="mb-3">
-                <label for="Input3" class="form-label">Fullname</label>
-                <input type="text" class="form-control" id="Input3" placeholder="fullname" name="fullname">
+                <label for="fullname" class="form-label">Fullname</label>
+                <input type="text" class="form-control" id="fullname" placeholder="fullname" name="fullname">
             </div>
             <div class="mb-3">
                 <label for="address" class="form-label">Address</label>
@@ -42,7 +42,7 @@
             </div>
             <div class="mb-3">
                 <label for="pincode" class="form-label">Pin Code</label>
-                <input type="text" class="form-control" id="pincode" placeholder="723xxx" name="pincode">
+                <input type="text" class="form-control" id="pincode" placeholder="723xxx" name="pin_code">
             </div><br>
             <div style="text-align: center;">
                 <button type="submit" class="btn btn-primary" value="Register">Submit</button>

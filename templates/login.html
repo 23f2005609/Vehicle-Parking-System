@@ -22,15 +22,15 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
-        <h2 class="center">Login</h2>
+        <h1 class="center">Login</h1>
         <form action="/login" method="POST">
             <div class="mb-3">
-                <label for="Input1" class="form-label">Email ID</label>
-                <input type="email" class="form-control" id="Input1" placeholder="Shiv123@mail.com"
+                <label for="email" class="form-label">Email ID</label>
+                <input type="email" class="form-control" id="email" placeholder="Shiv123@mail.com"
                     name="user_name"><br>
                 <div class="mb-3">
-                    <label for="Input2" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="Input2" name="password"><br>
+                    <label for="passw" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="passw" name="password"><br>
                 </div>
                 <div style="text-align: center;">
                     <button type="submit" class="btn btn-primary" value="Login">Login</button>
