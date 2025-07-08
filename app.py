@@ -12,7 +12,8 @@ def create_admin():
         admin = UserInfo(
             fullname="Admin",
             email=admin_email,
-            password="admin1",  
+            password="admin1",
+            phone=1234567809,  
             address="Dhaleswar, Kalyani",
             pin_code="799007"
         )
