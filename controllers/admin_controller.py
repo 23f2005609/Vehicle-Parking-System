@@ -15,7 +15,6 @@ def admin_dash(email):
     parkinglots = cal_avail_spots(parkinglots) #Using helper function to compute available spots
 
     return render_template("admin_dash.html", email=email, parkinglots=parkinglots, user=admin,is_search=False) #we are just viewing not searching
-
 @app.route("/admin_search/<email>", methods=["GET", "POST"])
 def admin_search(email):
     admin = UserInfo.query.filter_by(email=email).first() # fetching by email in url and first returns single object or none
@@ -52,12 +51,14 @@ def update_admin_profile(id,email):
         Email=request.form.get("email")
         Password=request.form.get("password")
         Fullname=request.form.get("fullname")
+        phn=request.form.get("phn_no")
         Address=request.form.get("address")
         Pin_code=request.form.get("pin_code")
          # updates db with new records
         A.email=Email
         A.password=Password
         A.fullname=Fullname
+        A.phone=phn
         A.address=Address
         A.pin_code=Pin_code
         db.session.commit() #commits data permanently in db
@@ -70,13 +71,13 @@ def update_admin_profile(id,email):
 @app.route('/users/<email>')
 def all_registered_users(email):
     admin = UserInfo.query.filter_by(email=email).first()
-    users = UserInfo.query.filter(UserInfo.email != "admin@gmail.com").all()
+    users = UserInfo.query.filter(UserInfo.email != "admin@gmail.com").all() #show all the users except admin
     return render_template('reg_users.html', users=users, user=admin, email=email)
 
 @app.route('/admin/summary/<email>')
 def summary_admin(email):
-    parkinglots = ParkingLot.query.all() #fetch all parking lots
     admin = UserInfo.query.filter_by(email=email).first()  #fetch admin by email
+    parkinglots = ParkingLot.query.all() #fetch all parking lots
     payments = Payment.query.all()
     total_amount = sum(payment.amount or 0 for payment in payments)
     total_lots = len(parkinglots)
@@ -96,18 +97,25 @@ def summary_admin(email):
     
     plt.figure(figsize=(6, 4))
     plt.title("Total ₹ Revenue Per Parking Lot")
-    plt.pie(
-        revenues, 
-        labels=lot_labels, 
-        autopct='%1.1f%%', 
-        startangle=140, 
-        shadow=True
-    )
-    plt.axis('equal')  #it Keeps pie circular
-    pie_path = os.path.join('static', 'Revenue_pie_chart.png')
-    plt.savefig(pie_path)
-    plt.tight_layout()
-    plt.close()
+    if revenues and any(r > 0 for r in revenues):
+        plt.pie(
+            revenues, 
+            labels=lot_labels, 
+            autopct='%1.1f%%', 
+            startangle=140, 
+            shadow=True
+        )
+        plt.axis('equal')  #it Keeps pie circular
+        pie_path = os.path.join('static', 'Revenue_pie_chart.png')
+        plt.savefig(pie_path)
+        plt.tight_layout()
+        plt.close()
+    else: #if no data available no revenue yet
+        plt.text(0.5, 0.5, "No Data Available !", ha='center', va='center', fontsize=18, color='red')
+        plt.axis('off')
+        pie_path = os.path.join('static', 'Revenue_pie_chart.png')
+        plt.savefig(pie_path)
+        plt.close()
     
     # --- 2. Occupied vs Available Bar Chart ---
     occupied_nos = []
@@ -266,7 +274,7 @@ def delete_parkingspot(spot_id,email):
     spot = ParkingSpot.query.get(spot_id) # it gets spot by id
     if spot.status == 'O':  #do not delete if it is occupied
         flash("Soory, Can't delete occupied spot!", "danger")
-        return redirect(url_for('view_spot', spot_id=spot.id, email=email))
+        return redirect(url_for('view_parkingspot', spot_id=spot.id, email=email))
     db.session.delete(spot)
     db.session.commit()
     flash("Parking Spot Deleted Successfully !", "success")

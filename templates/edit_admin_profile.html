@@ -1,7 +1,7 @@
 {% extends "admin_layout.html" %} <!-- Inherit navbar, styles, etc. -->
 {% block content %}
 {% if user %}
-<h3 class="text-center mt-4">Edit Profile</h3>
+<h3 class="text-center m-4">Edit Profile</h3>
 
 <form action="{{ url_for('update_admin_profile',id=user.id, email=email) }}" method="POST">
 
@@ -21,13 +21,18 @@
     </div>
 
     <div class="mb-3">
-        <label for="address" class="form-label">Address:</label>
-        <textarea class="form-control" id="address" name="address" required>{{ user.address }}</textarea>
+        <label for="phn_no" class="form-label">Phone Number:</label>
+        <input type="text" class="form-control" id="phn_no" name="phn_no" value="{{ user.phone }}" required>
     </div>
 
     <div class="mb-3">
         <label for="pin_code" class="form-label">Pin Code:</label>
         <input type="text" class="form-control" id="pin_code" name="pin_code" value="{{ user.pin_code }}" required>
+    </div>
+
+    <div class="mb-5">
+        <label for="address" class="form-label">Address:</label>
+        <textarea class="form-control" id="address" name="address" required>{{ user.address }}</textarea>
     </div>
 
     <div style="text-align: center;">
