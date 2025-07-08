@@ -162,7 +162,7 @@ body {
 
 .spot-grid {
     display: grid;
-    grid-template-columns: repeat(5, 30px);
+    grid-template-columns: repeat(6, 30px);
     gap: 6px;
 }
 
