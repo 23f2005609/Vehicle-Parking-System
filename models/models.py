@@ -14,6 +14,7 @@ class UserInfo(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
     fullname = db.Column(db.String(100),nullable=False)
+    phone = db.Column(db.Integer,nullable=False)
     address = db.Column(db.String(200),nullable=False)
     pin_code = db.Column(db.Integer,nullable=False)
     # Relations
