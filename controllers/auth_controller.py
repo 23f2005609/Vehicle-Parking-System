@@ -31,6 +31,7 @@ def user_signup():
         u_name=request.form.get("user_name")
         pwd=request.form.get("password")
         fullname=request.form.get("fullname")
+        phn=request.form.get("phn_no")
         address=request.form.get("address")
         pin=request.form.get("pin_code")
         usr=UserInfo.query.filter_by(email=u_name,password=pwd).first() # we are checking if user already exists or not
@@ -38,7 +39,7 @@ def user_signup():
             flash("This email is already registered, try login now!", "danger")
             return redirect(url_for("user_signin"))
         #creates new userinfo and saves it to db
-        new_usr=UserInfo(email=u_name,password=pwd,fullname=fullname,address=address,pin_code=pin)
+        new_usr=UserInfo(email=u_name,password=pwd,fullname=fullname,phone=phn,address=address,pin_code=pin)
         db.session.add(new_usr)
         db.session.commit()
         flash("Registration is Successfull, lets login!", "success")

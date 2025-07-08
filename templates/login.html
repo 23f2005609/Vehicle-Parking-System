@@ -24,17 +24,16 @@
         {% endwith %}
         <h1 class="center">Login</h1>
         <form action="/login" method="POST">
-            <div class="mb-3">
+            <div class="mb-4">
                 <label for="email" class="form-label">Email ID</label>
-                <input type="email" class="form-control" id="email" placeholder="Shiv123@mail.com"
-                    name="user_name"><br>
-                <div class="mb-3">
+                <input type="email" class="form-control mb-4" id="email" placeholder="Shiv123@mail.com"
+                    name="user_name">
+                <div class="mb-5">
                     <label for="passw" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="passw" name="password"><br>
+                    <input type="password" class="form-control" id="passw" name="password">
                 </div>
                 <div style="text-align: center;">
-                    <button type="submit" class="btn btn-primary" value="Login">Login</button>
-                    <br>
+                    <button type="submit" class="btn btn-primary mb-2" value="Login">Login</button><br>
                     New user? <a href="/register">Signup</a>
                 </div>
         </form>
