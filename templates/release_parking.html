@@ -1,6 +1,6 @@
 {% extends "user_layout.html" %}
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-4">
     <h4 class="center">Release the Parking Spot</h4>
     <form method="POST" action="{{ url_for('release_lot', res_id=reservation.id, email=user.email) }}">
         <div class="mb-3">

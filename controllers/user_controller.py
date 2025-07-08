@@ -52,12 +52,14 @@ def update_user_profile(id,email):
         Email=request.form.get("email") 
         Password=request.form.get("password")
         Fullname=request.form.get("fullname")
+        phn=request.form.get("phn_no")
         Address=request.form.get("address")
         Pin_code=request.form.get("pin_code")
         # it updates db with new records
         U.email=Email
         U.password=Password
         U.fullname=Fullname
+        U.phone=phn
         U.address=Address
         U.pin_code=Pin_code
         db.session.commit() #commits data permanently in db
@@ -99,6 +101,8 @@ def summary_user(email):
     bar_path = os.path.join("static", "user_spot_summary_bar.png")
     plt.savefig(bar_path)
     plt.close()
+
+    #pie chart
     # Fetch all payments by this user by joining Payment and ReserveParking spot
     payments = Payment.query.join(ReserveParkingSpot).filter(ReserveParkingSpot.user_id == user.id).all()
     # Aggregate spending per lot
@@ -111,13 +115,21 @@ def summary_user(email):
     labels = list(spend_per_lot.keys())
     values = list(spend_per_lot.values())
     plt.figure(figsize=(6, 4))
-    plt.pie(values, labels=labels, autopct="%1.1f%%", startangle=140, shadow=True)
     plt.title("Total ₹ Spent Per Parking Lot")
-    pie_path = os.path.join("static", "user_spot_summary_pie.png")
-    plt.tight_layout()
-    plt.savefig(pie_path)
-    plt.close()
-    return render_template("user_summary.html",user=user,name=user.fullname,total_parkings=total_parkings,total_amount=total_amount)
+    if values and any(v > 0 for v in values):
+        plt.pie(values,labels=labels, autopct="%1.1f%%", startangle=140, shadow=True)
+        # plt.title("Total ₹ Spent Per Parking Lot")
+        pie_path = os.path.join("static", "user_spot_summary_pie.png")
+        plt.tight_layout()
+        plt.savefig(pie_path)
+        plt.close()
+    else:
+        plt.text(0.5, 0.5, "No Data Available !", ha="center", va="center", fontsize=18, color="red")
+        pie_path = os.path.join("static", "user_spot_summary_pie.png")
+        plt.tight_layout()
+        plt.savefig(pie_path)
+        plt.close()
+    return render_template("user_summary.html",user=user,total_parkings=total_parkings,total_amount=total_amount)
 #route where users can see their payment history
 @app.route('/user/payments/<email>')
 def user_pay(email):
