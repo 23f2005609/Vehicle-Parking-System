@@ -3,8 +3,9 @@ from flask import Flask
 from models.models import db, UserInfo
 from controllers.api_controllers import api  
 
+
 # Automatically Creates admin without registration
-def create_admin():
+def add_admin():
     admin_email = "admin@gmail.com"
     existing_admin = UserInfo.query.filter_by(email=admin_email).first()
     
@@ -23,19 +24,19 @@ def create_admin():
 
 def setup_app():
     app=Flask(__name__)
-    app.secret_key = 'super_secret_@123'  # You can use any random string here , we need this if we use flask sessions , flash
+    app.secret_key = 'supersecret@123'  # You can use any random string here , we need this if we use flask sessions , flash
 
     app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///vehicle_parking.sqlite3" #Having db file
 
     db.init_app(app) #Flask app connected to db(SQL alchemy)
     with app.app_context():
         db.create_all()   #creates db if not there
-        create_admin()   #auto creates admin
+        add_admin()   #auto creates admin
 
-    api.init_app(app) #Flask App connect to Apis
+    api.init_app(app) #It initializes the REST API routes into the app.
     app.app_context().push() #Direct access to other modules
     app.debug=True
-    print("Vehicle app is running...")
+    print("Vehicle Parking System is Started...")
     return app
 
 #Call the setup
@@ -46,5 +47,5 @@ from controllers.admin_controller import *
 from controllers.user_controller import *
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run(debug=False)
 
