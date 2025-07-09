@@ -76,8 +76,6 @@ def summary_user(email):
     payments = Payment.query.filter_by(id=user.id).all()
     total_parkings = len(reservations)
     total_amount = sum(res.payment.amount if res.payment else 0 for res in reservations)
-    # total_amount = sum(payment.amount or 0 for payment in payments)
-
     lot_names = []
     use_count = {}
     for res in reservations:
@@ -130,6 +128,7 @@ def summary_user(email):
         plt.savefig(pie_path)
         plt.close()
     return render_template("user_summary.html",user=user,total_parkings=total_parkings,total_amount=total_amount)
+
 #route where users can see their payment history
 @app.route('/user/payments/<email>')
 def user_pay(email):
