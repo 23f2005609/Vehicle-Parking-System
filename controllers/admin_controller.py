@@ -22,7 +22,7 @@ def admin_search(email):
         s_txt = request.form.get("s_txt") #text admin enters in form to search
         s_type = request.form.get("s_type") #type admin selects in select form in html
 
-        # validating if admin has searched something or not
+        # confirming if admin has searched something or not
         if not s_txt or not s_type:
             flash("Please enter something and select a search type!", "danger")
             return redirect(url_for("admin_dash", email=email))
@@ -33,6 +33,8 @@ def admin_search(email):
             parkinglots = find_by_address(s_txt)
         elif s_type == "pin_code":
             parkinglots = find_by_pincode(s_txt)
+        elif s_type == "lot_name":
+            parkinglots = find_by_lot_name(s_txt)
         else:
             parkinglots = [] #Returns empty if not found
 
@@ -209,7 +211,7 @@ def update_parkinglot(id,email):
         L.maximum_number_of_spots=new_max_spots
         db.session.commit()
 
-        # If thenew spot count is greater than old, add new spots, happens if admin increases no of spots 
+        # If the new spot count is greater than old, add new spots it happens if admin increases no of spots 
         if new_max_spots > current_spot_count:
             for _ in range(new_max_spots - current_spot_count):
                 new_spot = ParkingSpot(lot_id=id, status='A')
@@ -243,8 +245,6 @@ def delete_parkinglot(id, email):
     if occupied_spots > 0:
         flash("Can't delete parking lot, Some parking spots are still occupied!", "danger")
         return redirect(url_for("admin_dash", email=email))
-    
-    
     # it deletes all related payments when lot is deleted
     reservations = ReserveParkingSpot.query.filter_by(lot_id=id).all()
     for r in reservations:
@@ -345,6 +345,10 @@ def find_by_address(s_txt):
 def find_by_pincode(s_txt):
     pin_code=ParkingLot.query.filter(ParkingLot.pin_code.ilike(f"%{s_txt}%")).all()  #returns all pincode searched by user or admin
     return pin_code
+
+def find_by_lot_name(s_txt):
+    lot_names=ParkingLot.query.filter(ParkingLot.prime_location_name.ilike(f"%{s_txt}%")).all() #returns all lot name searched by user or admin
+    return lot_names
 
 def get_parkinglot(id):
     parkinglot=ParkingLot.query.filter_by(id=id).first()
