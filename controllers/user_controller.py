@@ -71,9 +71,9 @@ def update_user_profile(id,email):
 @app.route("/user/summary/<string:email>")
 def summary_user(email):
     user = UserInfo.query.filter_by(email=email).first() #fetches user with email
-    # Gets all reservation history for that user
-    reservations = ReserveParkingSpot.query.filter_by(user_id=user.id).all()
-    payments = Payment.query.filter_by(id=user.id).all()
+    reservations = ReserveParkingSpot.query.filter_by(user_id=user.id).all() # Gets all reservation history for that user
+    # Bar chart for usage of lots
+    payments = Payment.query.filter_by(id=user.id).all() 
     total_parkings = len(reservations)
     total_amount = sum(res.payment.amount if res.payment else 0 for res in reservations)
     lot_names = []
@@ -88,7 +88,6 @@ def summary_user(email):
         use_count['No Data'] = 0
     labels = list(use_count.keys())
     sizes = list(use_count.values())
-    # Bar chart for usage of lots by user
     plt.figure(figsize=(6, 4))
     wrapped_labels = [label.replace(" ", "\n") for label in labels] #make long lot name by replacing spaces with newlines
     plt.bar(wrapped_labels, sizes, color="blue")
@@ -100,13 +99,13 @@ def summary_user(email):
     plt.savefig(bar_path)
     plt.close()
 
-    #pie chart
-    # Fetch all payments by this user by joining Payment and ReserveParking spot
+    #pie chart for spending
+    # it fetches all payments by this user by joining Payment and ReserveParking spot
     payments = Payment.query.join(ReserveParkingSpot).filter(ReserveParkingSpot.user_id == user.id).all()
     # Aggregate spending per lot
     spend_per_lot = {}
     for payment in payments:
-        lot = payment.reservation.spot.lot if payment.reservation and payment.reservation.spot else None
+        lot = payment.reservation.spot.lot if payment.reservation and payment.reservation.spot else None #gets which parking lot payment belongs to
         if lot:
             lot_name = lot.prime_location_name
             spend_per_lot[lot_name] = spend_per_lot.get(lot_name, 0) + payment.amount #{"Lot A": 100, "Lot B": 60} creates a dict
