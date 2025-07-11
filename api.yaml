@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Parkc - Parking Lot API
+  title: ParkC; - Parking Lot API
   version: 1.0.0
   description: API for managing parking lots
 
