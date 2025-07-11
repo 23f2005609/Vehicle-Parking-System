@@ -88,6 +88,8 @@ def summary_user(email):
         use_count['No Data'] = 0
     labels = list(use_count.keys())
     sizes = list(use_count.values())
+    images_folder = os.path.join('static', 'images') 
+    os.makedirs(images_folder, exist_ok=True)#it creates image folder if not present
     plt.figure(figsize=(6, 4))
     wrapped_labels = [label.replace(" ", "\n") for label in labels] #make long lot name by replacing spaces with newlines
     plt.bar(wrapped_labels, sizes, color="blue")
@@ -95,7 +97,7 @@ def summary_user(email):
     plt.ylabel("No. of Reservations")
     plt.xticks(rotation=0, ha='center')
     plt.tight_layout()
-    bar_path = os.path.join("static", "user_spot_summary_bar.png")
+    bar_path = os.path.join(images_folder, "user_spot_summary_bar.png")
     plt.savefig(bar_path)
     plt.close()
 
@@ -111,6 +113,8 @@ def summary_user(email):
             spend_per_lot[lot_name] = spend_per_lot.get(lot_name, 0) + payment.amount #{"Lot A": 100, "Lot B": 60} creates a dict
     labels = list(spend_per_lot.keys())
     values = list(spend_per_lot.values())
+    images_folder = os.path.join('static', 'images')
+    os.makedirs(images_folder, exist_ok=True)
     plt.figure(figsize=(6, 4))
     plt.title("Total ₹ Spent Per Parking Lot")
     if values and any(v > 0 for v in values):
@@ -122,7 +126,7 @@ def summary_user(email):
         plt.close()
     else:
         plt.text(0.5, 0.5, "No Data Available !", ha="center", va="center", fontsize=18, color="red")
-        pie_path = os.path.join("static", "user_spot_summary_pie.png")
+        pie_path = os.path.join(images_folder, "user_spot_summary_pie.png")
         plt.tight_layout()
         plt.savefig(pie_path)
         plt.close()
