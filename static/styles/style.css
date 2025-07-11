@@ -7,7 +7,7 @@
     margin: 10px;
     width: 160px;
 }
-
+/*Home logo*/
 .Home-ParkC{
     margin: 15px;
     width: 350px;
@@ -16,7 +16,6 @@
 
 /*For Home Page */
 .bg-img {
-        
             background-image: url('/static/styles/images/background.jpg');
             background-position: center;
             height: 100vh;
