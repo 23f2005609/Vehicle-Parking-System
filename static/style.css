@@ -1,0 +1,190 @@
+* {
+    margin: 0px;
+}
+
+/*Parkme; logo*/
+.ParkC{
+    margin: 10px;
+    width: 160px;
+}
+/*Home logo*/
+.Home-ParkC{
+    margin: 15px;
+    width: 350px;
+}
+
+
+/*For Home Page */
+.bg-img {
+            background-image: url('images/background.jpg');
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .home-container {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 55px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .home-container h1 {
+            font-size: 2.5rem;
+            color: rgb(17, 34, 79);
+            margin-bottom: 20px;
+        }
+
+        .home-container p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+    
+ /* for body- login, signup */
+.h1 {
+    background-image: url("images/background.jpg");
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
+
+ .head {
+    text-align: center;
+    margin: 30px;
+    height: 250px;
+    font-family:cursive;
+    color: rgb(255, 255, 255);
+} 
+
+.form-body {
+    border: 1px solid rgb(218, 228, 233);
+    background-color: rgb(249 253 255);
+    width: 500px;
+    height: auto;
+    margin: 180px;
+    margin-top: 150px;
+    padding: 40px;
+    border-radius: 12px;
+    font-size: 18px;
+    box-shadow: 0 12px 15px rgba(0, 0, 0, 0.2);
+} 
+
+.center {
+    text-align: center;
+    margin: 18px;
+    color: rgb(17, 34, 79);
+}
+
+
+/* Styling for Dashboard */
+body {
+    background-image: url("images/background.jpg");
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+
+
+/* Navbar styling */
+.navbar {
+    background-color: #d5dfff;
+    border-radius: 5px; 
+    padding: 10px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgb(255 255 255);
+}
+.nav-item{
+    color:rgb(255, 255, 255);
+     font-size: 18px;
+}
+
+.nav-center {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+
+/* Styling for Parking lots title and Lot Cards */
+.section-title {
+    font-family:Arial, Helvetica, sans-serif;
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 20px 0 20px;
+    border: 3px solid #f8f8f8;
+    border-radius: 10px;
+    padding: 8px;
+    color: #082383;
+    color: #101218;
+}
+
+.parking-lot {
+    border: 1px solid #f4f4f4;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.lot-title {
+    font-weight: bold;
+    font-size: 1.4rem;
+}
+.lot-subtitle {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #595e65;
+    font-size: 1.2rem;
+}
+
+
+.spot-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 30px);
+    gap: 6px;
+}
+
+.spot-box {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+.available {
+    background-color: #94e998;
+    color: #0b4844;
+}
+
+.occupied {
+    background-color: #e58f96;
+    color: #781a23;
+}
+
+ 
