@@ -119,8 +119,8 @@ def summary_user(email):
     plt.title("Total ₹ Spent Per Parking Lot")
     if values and any(v > 0 for v in values):
         plt.pie(values,labels=labels, autopct="%1.1f%%", startangle=140, shadow=True)
-        # plt.title("Total ₹ Spent Per Parking Lot")
-        pie_path = os.path.join("static", "user_spot_summary_pie.png")
+        plt.title("Total ₹ Spent Per Parking Lot")
+        pie_path = os.path.join(images_folder, "user_spot_summary_pie.png")
         plt.tight_layout()
         plt.savefig(pie_path)
         plt.close()
