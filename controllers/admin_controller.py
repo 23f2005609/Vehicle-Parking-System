@@ -93,6 +93,8 @@ def summary_admin(email):
         lot_labels.append(lot.prime_location_name)
         revenues.append(total_revenue)
     
+    images_folder = os.path.join('static', 'images')
+    os.makedirs(images_folder, exist_ok=True) #it creates image folder if not present
     plt.figure(figsize=(6, 4))
     plt.title("Total ₹ Revenue Per Parking Lot")
     # it checks if there is any revenue
@@ -105,7 +107,7 @@ def summary_admin(email):
             shadow=True
         )
         plt.axis('equal')  #it Keeps pie circular
-        pie_path = os.path.join('static', 'Revenue_pie_chart.png')
+        pie_path = os.path.join(images_folder, 'Revenue_pie_chart.png')
         plt.savefig(pie_path)
         plt.tight_layout()
         plt.close()
@@ -113,7 +115,7 @@ def summary_admin(email):
     else:
         plt.text(0.5, 0.5, "No Data Available !", ha='center', va='center', fontsize=18, color='red')
         plt.axis('off')
-        pie_path = os.path.join('static', 'Revenue_pie_chart.png')
+        pie_path = os.path.join('static','images', 'Revenue_pie_chart.png')
         plt.savefig(pie_path)
         plt.close()
     # --- 2. Occupied vs Available Bar Chart ---
@@ -128,6 +130,8 @@ def summary_admin(email):
         available_nos.append(available)
         lot_labels.append(lot.prime_location_name)
     x = range(len(lot_labels))
+    images_folder = os.path.join('static', 'images')
+    os.makedirs(images_folder, exist_ok=True)
     plt.figure(figsize=(6, 4))
     plt.title("Available vs Occupied Bar Chart")
     plt.bar(x, available_nos, width=0.4, label='Available', color='green')
@@ -137,7 +141,7 @@ def summary_admin(email):
     plt.xticks([i + 0.2 for i in x], wrap_labels, rotation=0,ha='right') #ha='center': aligns text in center in multiline label under bar
     plt.legend()
     plt.tight_layout(pad=2.0)
-    bar_path = os.path.join('static', 'Occupied_available_bar_chart.png')
+    bar_path = os.path.join(images_folder, 'Occupied_available_bar_chart.png')
     plt.savefig(bar_path)
     plt.close()
 
