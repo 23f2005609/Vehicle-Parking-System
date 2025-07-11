@@ -27,8 +27,8 @@ def admin_search(email):
             flash("Please enter something and select a search type!", "danger")
             return redirect(url_for("admin_dash", email=email))
 
-        if s_type == "user_id":
-            parkinglots = find_by_user_id(s_txt)
+        if s_type == "lot_id":
+            parkinglots = find_by_lot_id(s_txt)
         elif s_type == "address":
             parkinglots = find_by_address(s_txt)
         elif s_type == "pin_code":
@@ -80,25 +80,22 @@ def all_registered_users(email):
 def summary_admin(email):
     admin = UserInfo.query.filter_by(email=email).first()  #fetch admin by email
     parkinglots = ParkingLot.query.all() #fetch all parking lots
-    payments = Payment.query.all()
+    # --- 1. Revenue Pie Chart ---
+    # it gets only payments where leaving time is not null or user has made the payment
+    payments = Payment.query.join(ReserveParkingSpot).filter(ReserveParkingSpot.leaving_timestamp.isnot(None)).all()
     total_amount = sum(payment.amount or 0 for payment in payments)
     total_lots = len(parkinglots)
     lot_labels = []
     revenues = []
     for lot in parkinglots:
-        #for each lot get all its spots
-        spots = ParkingSpot.query.filter_by(lot_id=lot.id).all()
-        total_revenue = 0
-        for s in spots:
-            #for each spot get the reservation
-            reservations = ReserveParkingSpot.query.filter_by(spot_id=s.id).all()
-            for r in reservations:
-                total_revenue += r.parking_cost_per_unit or 0
+        # it gets the sum of total revenue for this lot
+        total_revenue = sum(p.amount or 0 for p in payments if p.reservation.lot_id == lot.id)
         lot_labels.append(lot.prime_location_name)
         revenues.append(total_revenue)
     
     plt.figure(figsize=(6, 4))
     plt.title("Total ₹ Revenue Per Parking Lot")
+    # it checks if there is any revenue
     if revenues and any(r > 0 for r in revenues):
         plt.pie(
             revenues, 
@@ -112,13 +109,13 @@ def summary_admin(email):
         plt.savefig(pie_path)
         plt.tight_layout()
         plt.close()
-    else: #if no data available no revenue yet
+     #if no data available no revenue yet
+    else:
         plt.text(0.5, 0.5, "No Data Available !", ha='center', va='center', fontsize=18, color='red')
         plt.axis('off')
         pie_path = os.path.join('static', 'Revenue_pie_chart.png')
         plt.savefig(pie_path)
         plt.close()
-    
     # --- 2. Occupied vs Available Bar Chart ---
     occupied_nos = []
     available_nos = []
@@ -334,9 +331,9 @@ def cal_avail_spots(parkinglots):
     return parkinglots
 
 
-def find_by_user_id(s_txt):
-    user_id=ParkingLot.query.filter(ParkingLot.id.ilike(f"%{s_txt}%")).all() #returns all id searched by user or admin, ilike matches the searched input
-    return user_id
+def find_by_lot_id(s_txt):
+    lot_id=ParkingLot.query.filter(ParkingLot.id.ilike(f"%{s_txt}%")).all() #returns all lot id searched by admin, ilike matches the searched input
+    return lot_id
 
 def find_by_address(s_txt):
     location=ParkingLot.query.filter(ParkingLot.address.ilike(f"%{s_txt}%")).all() #returns all address searched by user or admin
