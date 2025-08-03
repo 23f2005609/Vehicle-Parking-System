@@ -13,6 +13,14 @@
     width: 350px;
 }
 
+.but-g:hover{
+    background-color: #94e998;
+    color: #0b4844;
+}
+.but-o:hover{
+    background-color: #e58f96;
+    color: #781a23;
+}
 
 /*For Home Page */
 .bg-img {
@@ -120,6 +128,7 @@ body {
 .nav-item{
     color:rgb(255, 255, 255);
      font-size: 18px;
+    
 }
 
 .nav-center {
@@ -178,13 +187,15 @@ body {
 
 
 .available {
-    background-color: #94e998;
-    color: #0b4844;
+    background-color: green;
+    color: white;
+
 }
 
 .occupied {
-    background-color: #e58f96;
-    color: #781a23;
+    background-color: red;
+    color: white;
+    
 }
 
  
